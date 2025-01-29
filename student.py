@@ -1,4 +1,4 @@
-import streamlit as st
+ import streamlit as st
 import sqlite3
 import openai  # استيراد مكتبة openai
 from PIL import Image
@@ -16,7 +16,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ضع مفتاح OpenAI الخاص بكstudent.py
+
 OPENAI_API_KEY = "secret"
 openai.api_key = OPENAI_API_KEY
 
@@ -27,7 +27,7 @@ def get_gpt4_response(prompt: str) -> str:
     """
     try:
         completion = openai.chat.completions.create(
-            model="gpt-4",  # تأكد أن حسابك لديه وصول لـ GPT-4
+            model="gpt-4",
             messages=[
                 # رسالة "system" تضبط أسلوب المساعد
                 {"role": "system", "content": "You are a helpful assistant with broad general knowledge."},
@@ -716,19 +716,13 @@ def main():
             with st.chat_message(msg["role"]):
                 st.markdown(msg["content"])
 
-        # 5) التقاط سؤال المستخدم
+
         if prompt := st.chat_input(localize("ask_question")):
             st.session_state.messages.append({"role": "user", "content": prompt})
             with st.chat_message("user"):
                 st.markdown(prompt)
 
-            # بإمكانك دمج pdf_context في الـ Prompt إن أردت:
-            # full_prompt = f"""
-            # You have the following PDF context:
-            # {pdf_context}
-            # Answer the user's question, or rely on your knowledge if not in PDF.
-            # Question: {prompt}
-            # """
+
 
             full_prompt = prompt  # أبسط شيء: إرسال مدخل المستخدم فقط
 
